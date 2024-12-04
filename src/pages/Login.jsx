@@ -50,6 +50,7 @@ const Login = () => {
       title="Login to Your Account"
       isDarkBackground={false}
       titlePosition="center"
+      titleColor='primary.100'
     >
       {/* Login Form Container */}
       <Box
@@ -64,8 +65,8 @@ const Login = () => {
         <form onSubmit={formik.handleSubmit}>
           <VStack spacing={4} alignItems="stretch">
             {/* Email Field */}
-            <FormControl id="email"  isInvalid={formik.touched.email && !!formik.errors.email} isRequired>
-              <FormLabel>Email Address</FormLabel>
+            <FormControl id="email"  color='highlight.200'  isInvalid={formik.touched.email && !!formik.errors.email} isRequired>
+              <FormLabel >Email Address</FormLabel>
               <Input
                 type="email"
                 placeholder="Enter your email"
@@ -77,7 +78,7 @@ const Login = () => {
             </FormControl>
 
             {/* Password Field */}
-            <FormControl id="password" isRequired isInvalid={formik.touched.password && !!formik.errors.password}>
+            <FormControl color='highlight.200' id="password" isRequired isInvalid={formik.touched.password && !!formik.errors.password}>
               <FormLabel>Password</FormLabel>
               <Input
                 type="password"

@@ -6,19 +6,19 @@ import { VStack, Stack, Box, Text } from "@chakra-ui/react";
  * @param {React.ReactNode} props.children - The content to display within the section
  * @param {boolean} props.isDarkBackground - Determines if the background is dark (for white text)
  */
-const FullScreenSection = ({ children, isDarkBackground, title, titlePosition, ...boxProps }) => {
+const FullScreenSection = ({ children, isDarkBackground, title, titlePosition, titleColor, ...boxProps }) => {
     return (
         <VStack
             // Outer container for full width
             backgroundColor={boxProps.backgroundColor || "transparent"}
-            color={isDarkBackground ? "white" : "black"}
+            color={isDarkBackground ? "highlight.100" : "primary.100"}
             w="100%"
             alignItems="center"
             py={8}
         >
             {/* Title Section */}
             <Box as="header" w="100%" textAlign={titlePosition} mb={8} px={4}>
-                <Text fontSize="2xl" fontWeight="bold" fontFamily="Markazi Text" >
+                <Text fontSize="2xl" fontWeight="bold" fontFamily="Markazi Text" color={titleColor}>
                     {title}
                 </Text>
             </Box>
