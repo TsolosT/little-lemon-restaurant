@@ -9,14 +9,15 @@ const Footer = () => {
                 direction={{ base: "column", md: "row" }}
                 justify="space-between"
                 align="start"
-                maxW="1200px"
+                w="100%"
                 mx="auto"
-                px={4}
+                px={{ base: 4, md: 8 }}
+                gap={{base:4, md:1}}
             >
                 {/* Column 1: Logo */}
                 <Stack spacing={4} textAlign={{ base: "center", md: "center" }}  mx="auto">
-                    <Box boxSize='sm'>
-                        <Image src={logoFooter} alt='Little Lemon Logo'  mx="auto" />
+                    <Box w="100%" textAlign="center">
+                        <Image src={logoFooter} alt="Little Lemon Logo" mx="auto" maxW="150px" />
                     </Box>
                 </Stack>
 
