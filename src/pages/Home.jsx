@@ -78,13 +78,13 @@ function Home() {
                     </Box>
                     <Box gap='2'>
                         <Button  as={Link} to="/menu" bg="primary.200" color='primary.100' size="lg" _hover={{ bg:'secondary.100' }}>
-                                View Menu
+                                Order Online
                         </Button>
                     </Box>
                 </Flex>
                 <Flex minWidth='100%' alignItems='center' justifyContent='space-evenly'  direction={{ base: "column", md: "row" }} gap='2'>
                     {menu.map((item) => (
-                        <MenuItemCard key={item.id} menuItem={item}/>
+                        <MenuItemCard key={item.id} menuItem={item} hideCTA={false}/>
                     ))}
                 </Flex>
             </FullScreenSection>

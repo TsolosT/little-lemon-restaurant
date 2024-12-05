@@ -1,7 +1,7 @@
 import { Box, Image, Flex, Heading, Text, Button, Icon } from '@chakra-ui/react';
 import { FaBicycle } from 'react-icons/fa';
 
-const MenuItemCard = ({ menuItem }) => {
+const MenuItemCard = ({ menuItem, hideCTA }) => {
     return (
         <Box
             maxW="sm"
@@ -37,21 +37,23 @@ const MenuItemCard = ({ menuItem }) => {
                 </Text>
             </Box>
             {/* Footer: Order Button */}
-            <Box
-                display="flex"
-                justifyContent="center"
-                alignItems="center"
-                pb={2}
-            >
-                <Button
-                    color="primary.100"
-                    variant="ghost"
-                    rightIcon={<Icon as={FaBicycle} />}
-                    _hover={{ bg: 'secondary.200' }}
+            {!hideCTA && (
+                <Box
+                    display="flex"
+                    justifyContent="center"
+                    alignItems="center"
+                    pb={2}
                 >
-                    Order a delivery
-                </Button>
-            </Box>
+                    <Button
+                        color="primary.100"
+                        variant="ghost"
+                        rightIcon={<Icon as={FaBicycle} />}
+                        _hover={{ bg: 'secondary.200' }}
+                    >
+                        Order a delivery
+                    </ Button>
+                </Box>
+            )}
         </Box>
     );
 };

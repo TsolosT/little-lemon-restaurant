@@ -6,6 +6,7 @@ import Home from './pages/Home'
 import Menu from './pages/Menu'
 import Reservetion from './pages/Reservetion'
 import Login from './pages/Login'
+import UnderDevPage from './pages/UnderDevPage';
 
 function App() {
 
@@ -16,10 +17,12 @@ function App() {
           <Routes>
             <Route path='/' element={<Home/>} />
             <Route path='/menu' element={<Menu/>} />
-            {/* <Route path='/about' element={<About/>} /> */}
+            <Route path='/menu/:id' element={<UnderDevPage/>} />
+            <Route path='/about' element={<UnderDevPage/>} />
             <Route path='/reservetion' element={<Reservetion/>} />
-            {/* <Route path='/order-online' element={<OrderOnline/>} /> */}
+            <Route path='/order-online' element={<UnderDevPage/>} />
             <Route path='/login' element={<Login/>} />
+            <Route path='/*' element={<UnderDevPage/>} />
           </Routes>
           <Footer/>
         </Router>
