@@ -3,6 +3,7 @@ import { Box, Flex, Heading, Button  } from '@chakra-ui/react'
 import FullScreenSection from '../components/layout/FullScreenSection';
 import FaqList from '../components/FaqList';
 import MenuItemCard from '../components/MenuItemCard';
+import BookingForm from "../components/booking/BookingForm";
 import faqData from '../data/faq';
 import menu from '../data/menu';
 import { Link } from 'react-router-dom';
@@ -17,8 +18,18 @@ function Reservetion() {
                 isDarkBackground={true}
                 my={12}
                 direction="column"
+                alignItems='center'
+                width='100%'
             >
-                <h1>helo</h1>
+                <Box maxW={{ base: '100%', md: '50%' }} textAlign={{ base: 'center', md: 'left' }} color='highlight.200'>
+                    <Heading as="h1" fontSize={{ base: '2xl', md: '5xl' }} fontWeight="bold" mb={2} color='highlight.100'>
+                        Reserve a table at
+                    </Heading>
+                    <Heading as="h2" fontSize={{ base: 'lg'}}  mb={4}  color='secondary.200'>
+                        Little Lemon - Chicago
+                    </Heading>
+                </Box>
+                <BookingForm />
             </FullScreenSection>
             {/* Menu preview */}
             <FullScreenSection
