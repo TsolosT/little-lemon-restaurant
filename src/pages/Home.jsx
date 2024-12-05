@@ -1,4 +1,4 @@
-import { Box, Button, Flex, Heading, Text, Image, Icon  } from '@chakra-ui/react';
+import { Box, Button, Flex, Heading, Text, Image, Icon,VStack  } from '@chakra-ui/react';
 import { Link } from "react-router-dom";
 import FullScreenSection from '../components/layout/FullScreenSection';
 import restaurantFoodImg from '../assets/restauranfood.jpg';
@@ -85,14 +85,7 @@ function Home() {
                     </Box>
                 </Flex>
             </Box>
-            <FullScreenSection
-                backgroundColor="highlight.100"
-                title="Testimonials"
-                isDarkBackground={false}
-                titlePosition="center"
-            >
-                <h3>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque aspernatur pariatur ipsum voluptatum vel minus, cimus veniam natus, non ipsam voluptates aperiam eius, enim sapiente.</h3>
-            </FullScreenSection>
+ 
             {/* Testimonials */}
             <FullScreenSection
                 backgroundColor="primary.100"

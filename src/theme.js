@@ -14,6 +14,8 @@ const theme = extendTheme({
         100: "#EDEFEE", // Highlight (Light Gray)
         200: "#333333", // Highlight (Dark Gray)
         },
+        gradientPrimary:
+        "linear-gradient(180deg, rgba(152, 196, 181, 0) 0.35%, #98C4B5 39.22%, #495E57 100%)",
     },
     fonts: {
         heading: "Markazi Text, serif", // Headlines
