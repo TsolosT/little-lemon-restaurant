@@ -19,7 +19,7 @@ const FullScreenSection = ({ children, isDarkBackground, title, titlePosition, t
             {/* Title Section */}
             {title && (
                 <Box as="header" w="100%" textAlign={titlePosition} mb={8} px={4}>
-                    <Text fontSize={{ base: '2xl', md: '5xl' }} fontWeight="700" fontFamily="Markazi Text" color={titleColor}>
+                    <Text fontSize={{ base: '5xl', md: '5xl' }} fontWeight="700" fontFamily="Markazi Text" color={titleColor}>
                         {title}
                     </Text>
                 </Box>
