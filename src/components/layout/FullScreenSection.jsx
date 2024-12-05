@@ -17,15 +17,16 @@ const FullScreenSection = ({ children, isDarkBackground, title, titlePosition, t
             py={8}
         >
             {/* Title Section */}
-            <Box as="header" w="100%" textAlign={titlePosition} mb={8} px={4}>
-                <Text fontSize="2xl" fontWeight="bold" fontFamily="Markazi Text" color={titleColor}>
-                    {title}
-                </Text>
-            </Box>
+            {title && (
+                <Box as="header" w="100%" textAlign={titlePosition} mb={8} px={4}>
+                    <Text fontSize={{ base: '2xl', md: '5xl' }} fontWeight="700" fontFamily="Markazi Text" color={titleColor}>
+                        {title}
+                    </Text>
+                </Box>
+            )}
 
             <Stack
                 // Responsive container for main content
-                direction={{ base: "column", md: "row" }}
                 spacing={8}
                 maxWidth="1280px"
                 w="100%"

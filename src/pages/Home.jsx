@@ -1,33 +1,12 @@
-import { Box, Button, Flex, Heading, Text, Image, Icon,VStack  } from '@chakra-ui/react';
+import { Box, Button, Flex, Heading, Text, Image  } from '@chakra-ui/react';
 import { Link } from "react-router-dom";
 import FullScreenSection from '../components/layout/FullScreenSection';
+import ReviewCard from '../components/ReviewCard';
+import MenuItemCard from '../components/MenuItemCard';
 import restaurantFoodImg from '../assets/restauranfood.jpg';
 import aboutImage from '../assets/about.webp';
-import { FaStar } from "react-icons/fa";
-
-const reviews = [
-    {
-      id: 1,
-      rating: 4,
-      image: "https://images.unsplash.com/photo-1692777525709-122dee20e577?q=80&w=3024&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      username: "John Doe",
-      comment: "Great experience! The food was amazing.",
-    },
-    {
-      id: 2,
-      rating: 5,
-      image: "https://plus.unsplash.com/premium_photo-1723122130964-c2efc59b93bf?q=80&w=3000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      username: "Jane Smith",
-      comment: "Absolutely loved it! Will come back again.",
-    },
-    {
-      id: 3,
-      rating: 3,
-      image: "https://plus.unsplash.com/premium_photo-1679503585289-c02467981894?q=80&w=3871&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      username: "Chris Brown",
-      comment: "Good food but the service was a bit slow.",
-    },
-];
+import reviews from '../data/reviews';
+import menu from '../data/menu';
 
 
 function Home() {
@@ -40,6 +19,7 @@ function Home() {
                 px={4}
                 width='100%'
                 height={{ base: 'auto', md: '500px' }}
+                mb={8}
             >
                 <Flex
                 direction={{ base: 'column', md: 'row' }}
@@ -65,9 +45,8 @@ function Home() {
 
                     {/* Right Column: Image */}
                     <Box
-                        maxW={{ base: '90%', md: '30%' }}
+                        maxW={{ base: '300px', md: '360px' }}
                         position="relative"
-                        boxShadow="md"
                         borderRadius="8px"
                         overflow="hidden"
                         mx={{ base: 'auto', md: '0' }}
@@ -77,7 +56,6 @@ function Home() {
                         alt="Dining Experience"
                         objectFit="cover"
                         borderRadius="8px"
-                        boxShadow="md"
                         position="relative"
                         zIndex={1}
                         transform="translateY(-10px)"
@@ -85,7 +63,31 @@ function Home() {
                     </Box>
                 </Flex>
             </Box>
- 
+            {/* Specials */}
+            <FullScreenSection
+                backgroundColor="highlight.100"
+                isDarkBackground={false}
+                my={12}
+                direction="column"
+            >
+                <Flex minWidth='100%' alignItems='center' justifyContent='space-between'  direction={{ base: "column", md: "row" }} gap='2'>
+                    <Box p='2'>
+                        <Heading as="h1" fontSize={{ base: '2xl', md: '5xl' }} fontWeight="bold" mb={2}>
+                            This Week Specials!
+                        </Heading>
+                    </Box>
+                    <Box gap='2'>
+                        <Button  as={Link} to="/menu" bg="primary.200" color='primary.100' size="lg" _hover={{ bg:'secondary.100' }}>
+                                View Menu
+                        </Button>
+                    </Box>
+                </Flex>
+                <Flex minWidth='100%' alignItems='center' justifyContent='space-evenly'  direction={{ base: "column", md: "row" }} gap='2'>
+                    {menu.map((item) => (
+                        <MenuItemCard key={item.id} menuItem={item}/>
+                    ))}
+                </Flex>
+            </FullScreenSection>
             {/* Testimonials */}
             <FullScreenSection
                 backgroundColor="primary.100"
@@ -93,56 +95,17 @@ function Home() {
                 isDarkBackground={true}
                 titlePosition="center"
                 titleColor='highlight.100'
+                direction={{ base: "column", md: "row" }}
             >
                 {reviews.map((review) => (
-                    <Box
-                        key={review.id}
-                        bg="highlight.100"
-                        p={4}
-                        borderRadius="8px"
-                        boxShadow="md"
-                        transition="transform 0.3s ease, box-shadow 0.3s ease"
-                        _hover={{
-                            transform: "scale(1.05)",
-                            boxShadow: "lg",
-                        }}
-                        mx='auto'
-                    >
-                        {/* Rating */}
-                        <Flex mb={4}>
-                            {Array.from({ length: 5 }, (_, index) => (
-                                <Icon
-                                    as={FaStar}
-                                    key={index}
-                                    color={index < review.rating ? "yellow.400" : "gray.300"}
-                                    boxSize={4}
-                                />
-                            ))}
-                        </Flex>
-
-                        {/* Body */}
-                        <Flex align="center" mb={4}>
-                            <Image
-                            src={review.image}
-                            alt={review.username}
-                            boxSize="80px"
-                            borderRadius="8px"
-                            mr={4}
-                            />
-                            <Text fontWeight="bold" color="highlight.200">{review.username}</Text>
-                        </Flex>
-
-                        {/* Footer */}
-                        <Text fontSize="sm" color="highlight.200">
-                            {review.comment}
-                        </Text>
-                    </Box>
+                    <ReviewCard key={review.id} review={review}/>
                 ))}
             </FullScreenSection>
              {/* About */}
             <FullScreenSection
                 backgroundColor="highlight.100"
                 isDarkBackground={false}
+                direction={{ base: "column", md: "row" }}
             >
                 <Flex
                     direction={{ base: 'column', md: 'row' }}
