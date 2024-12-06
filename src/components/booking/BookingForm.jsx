@@ -1,19 +1,26 @@
 import { useContext } from "react";
 import { BookingContext } from "../../context/booking/BookingContext";
-import { Box, VStack, Progress, HStack, Text } from "@chakra-ui/react";
+import { Box, VStack, Progress, HStack, Text, Spinner  } from "@chakra-ui/react";
 import StepBasicInfo from "./StepBasicInfo";
 import StepReservationInfo from "./StepReservationInfo";
 import ReservationSummary from "./ReservationSummary";
+import useLoading from "../../hooks/useLoadingSpinner";
 
 const BookingForm = () => {
     const { state, dispatch } = useContext(BookingContext);
+    const { loading, startLoading, stopLoading } = useLoading();
 
     const handleNext = () => dispatch({ type: "NEXT_STEP" });
 
     const handleBack = () => dispatch({ type: "PREVIOUS_STEP" });
 
-    const handleReserve = () => dispatch({ type: "REVERSE_STEP" });
-
+    const handleReserve = () => {
+        startLoading();
+        dispatch({ type: "REVERSE_STEP" });
+        setTimeout(() => {
+            stopLoading(); // Stop loading after 3 seconds (simulate API request)
+        }, 3000);
+    };
 
     const stepLabels = ["Basic Info", "Reservation Info", "Confirmation"];
     const progress = (state.step / stepLabels.length) * 100;
@@ -62,8 +69,25 @@ const BookingForm = () => {
                         onReserve={handleReserve}
                     />
                 )}
-                {state.step === 3 && <ReservationSummary    basicInfo={state.basicInfo}
-                    reservationInfo={state.reservationInfo} />}
+                {state.step === 3 && (
+                    <>
+                        {loading ? (
+                            // Show Chakra UI Spinner while loading
+                            <Box textAlign="center" mt={8}>
+                                <Spinner size="xl" color="primary.200" />
+                                <Text mt={4} fontSize="lg" color="highlight.100">
+                                    Processing your reservation...
+                                </Text>
+                            </Box>
+                        ) : (
+                            // Show Reservation Summary after loading
+                            <ReservationSummary
+                                basicInfo={state.basicInfo}
+                                reservationInfo={state.reservationInfo}
+                            />
+                        )}
+                    </>
+                )}
             </Box>
         </VStack>
     );

@@ -4,7 +4,7 @@ function FaqList({data}) {
     return (
         <Accordion allowToggle>
             {data.map((item) => (
-                <AccordionItem key={item.key}>
+                <AccordionItem key={item.id}>
                     <h2>
                         <AccordionButton>
                             <Box as='span' flex='1' textAlign='left'>

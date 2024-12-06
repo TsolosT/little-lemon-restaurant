@@ -3,7 +3,7 @@ import { Box, Heading, Text, VStack } from "@chakra-ui/react";
 const ReservationSummary = ({ basicInfo, reservationInfo }) => {
     return (
         <Box p={4} textAlign="center">
-            <Heading size="lg" mb={4}>
+            <Heading size={{base:'md', md:'lg'}} mb={4}>
                 Thank You for Your Reservation!
             </Heading>
             <VStack spacing={2}>

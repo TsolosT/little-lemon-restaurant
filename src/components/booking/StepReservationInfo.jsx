@@ -25,7 +25,7 @@ const StepReservationInfo = ({ reservationInfo, setReservationInfo, onBack, onRe
     return (
         <Box p={4}>
             <VStack spacing={4}>
-                <HStack w={{base:'100%', md:'50%'}}>
+                <HStack flexDirection={{ base: "column", md: "row" }} w={{base:'100%', md:'50%'}}>
                     <Box  w={{base:'100%', md:'50%'}}>
                         <FormLabel>Date</FormLabel>
                         <Input
