@@ -1,4 +1,3 @@
-import { useState } from "react";
 import {
     Box,
     VStack,
@@ -12,19 +11,11 @@ import {
     FormLabel,
 } from "@chakra-ui/react";
 
-const StepReservationInfo = ({ formData, onBack, onReserve }) => {
-    const [reservationInfo, setReservationInfo] = useState({
-        date: formData.date,
-        time: formData.time,
-        guests: formData.guests,
-        occasion: formData.occasion,
-        seating: formData.seating,
-        specialRequest: formData.specialRequest,
-    });
+const StepReservationInfo = ({ reservationInfo, setReservationInfo, onBack, onReserve }) => {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setReservationInfo((prev) => ({ ...prev, [name]: value }));
+        setReservationInfo({ [name]: value });
     };
 
     const handleReserve = () => {
@@ -43,6 +34,11 @@ const StepReservationInfo = ({ formData, onBack, onReserve }) => {
                             value={reservationInfo.date}
                             onChange={handleChange}
                             focusBorderColor="secondary.100"
+                            sx={{
+                                "&::-webkit-calendar-picker-indicator": {
+                                    filter: "invert(70%) sepia(0%) saturate(500%) hue-rotate(170deg)",
+                                },
+                            }}
                         />
                     </Box>
                     <Box  w={{base:'100%', md:'50%'}}>
@@ -53,6 +49,11 @@ const StepReservationInfo = ({ formData, onBack, onReserve }) => {
                             value={reservationInfo.time}
                             onChange={handleChange}
                             focusBorderColor="secondary.100"
+                            sx={{
+                                "&::-webkit-calendar-picker-indicator": {
+                                    filter: "invert(70%) sepia(0%) saturate(500%) hue-rotate(170deg)",
+                                },
+                            }}
                         />
                     </Box>
                 </HStack>
@@ -94,7 +95,7 @@ const StepReservationInfo = ({ formData, onBack, onReserve }) => {
                         name="seating"
                         value={reservationInfo.seating}
                         onChange={(value) =>
-                            setReservationInfo((prev) => ({ ...prev, seating: value }))
+                            setReservationInfo({ seating: value })
                         }
                     >
                         <HStack>

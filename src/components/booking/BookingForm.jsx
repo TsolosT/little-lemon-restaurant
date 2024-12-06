@@ -1,37 +1,22 @@
-import { useState } from "react";
+import { useContext } from "react";
+import { BookingContext } from "../../context/booking/BookingContext";
 import { Box, VStack, Progress, HStack, Text } from "@chakra-ui/react";
 import StepBasicInfo from "./StepBasicInfo";
 import StepReservationInfo from "./StepReservationInfo";
 import ReservationSummary from "./ReservationSummary";
 
 const BookingForm = () => {
-    const [step, setStep] = useState(1);
-    const [formData, setFormData] = useState({
-        name: "",
-        phone: "",
-        email: "",
-        date: "",
-        time: "",
-        guests: 1,
-        occasion: "Casual",
-        seating: "Indoor",
-        specialRequest: "",
-    });
+    const { state, dispatch } = useContext(BookingContext);
 
-    const handleNext = (data) => {
-        setFormData((prev) => ({ ...prev, ...data }));
-        setStep(step + 1);
-    };
+    const handleNext = () => dispatch({ type: "NEXT_STEP" });
 
-    const handleBack = () => setStep(step - 1);
+    const handleBack = () => dispatch({ type: "PREVIOUS_STEP" });
 
-    const handleReserve = (data) => {
-        setFormData((prev) => ({ ...prev, ...data }));
-        setStep(3);
-    };
+    const handleReserve = () => dispatch({ type: "REVERSE_STEP" });
+
 
     const stepLabels = ["Basic Info", "Reservation Info", "Confirmation"];
-    const progress = (step / stepLabels.length) * 100;
+    const progress = (state.step / stepLabels.length) * 100;
 
     return (
         <VStack spacing={6} p={4} width='100%'>
@@ -48,8 +33,8 @@ const BookingForm = () => {
                         <Text
                             key={index}
                             fontSize="sm"
-                            fontWeight={index + 1 === step ? "bold" : "normal"}
-                            color={index + 1 <= step ? "primary.200" : "gray.400"}
+                            fontWeight={index + 1 === state.step ? "bold" : "normal"}
+                            color={index + 1 <= state.step ? "primary.200" : "gray.400"}
                         >
                             {label}
                         </Text>
@@ -59,15 +44,26 @@ const BookingForm = () => {
 
             {/* Step Content */}
             <Box w="100%">
-                {step === 1 && <StepBasicInfo formData={formData} onNext={handleNext} />}
-                {step === 2 && (
+                {state.step === 1 && <StepBasicInfo
+                        basicInfo={state.basicInfo}
+                        setBasicInfo={(info) =>
+                            dispatch({ type: "SET_BASIC_INFO", payload: info })
+                        }
+                        onNext={handleNext}
+                    />
+                }
+                {state.step === 2 && (
                     <StepReservationInfo
-                        formData={formData}
+                        reservationInfo={state.reservationInfo}
+                        setReservationInfo={(info) =>
+                            dispatch({ type: "SET_RESERVATION_INFO", payload: info })
+                        }
                         onBack={handleBack}
                         onReserve={handleReserve}
                     />
                 )}
-                {step === 3 && <ReservationSummary reservationData={formData} />}
+                {state.step === 3 && <ReservationSummary    basicInfo={state.basicInfo}
+                    reservationInfo={state.reservationInfo} />}
             </Box>
         </VStack>
     );

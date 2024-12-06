@@ -1,20 +1,10 @@
-import { useState } from "react";
 import { Box, Input, Button, VStack, FormLabel } from "@chakra-ui/react";
 
-const StepBasicInfo = ({ formData, onNext }) => {
-    const [basicInfo, setBasicInfo] = useState({
-        name: formData.name,
-        phone: formData.phone,
-        email: formData.email,
-    });
+const StepBasicInfo = ({ basicInfo, setBasicInfo, onNext }) => {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setBasicInfo((prev) => ({ ...prev, [name]: value }));
-    };
-
-    const handleNext = () => {
-        onNext(basicInfo);
+        setBasicInfo({ [name]: value });
     };
 
     return (
@@ -50,7 +40,7 @@ const StepBasicInfo = ({ formData, onNext }) => {
                         focusBorderColor="secondary.100"
                     />
                 </Box>
-                <Button onClick={handleNext}  bg="primary.200" color='primary.100' size="lg" _hover={{ bg:'secondary.100' }}>
+                <Button onClick={onNext}  bg="primary.200" color='primary.100' size="lg" _hover={{ bg:'secondary.100' }}>
                     Next
                 </Button>
             </VStack>

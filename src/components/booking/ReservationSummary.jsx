@@ -1,20 +1,20 @@
 import { Box, Heading, Text, VStack } from "@chakra-ui/react";
 
-const ReservationSummary = ({ reservationData }) => {
+const ReservationSummary = ({ basicInfo, reservationInfo }) => {
     return (
         <Box p={4} textAlign="center">
             <Heading size="lg" mb={4}>
                 Thank You for Your Reservation!
             </Heading>
             <VStack spacing={2}>
-                <Text><strong>Name:</strong> {reservationData.name}</Text>
-                <Text><strong>Date:</strong> {reservationData.date}</Text>
-                <Text><strong>Time:</strong> {reservationData.time}</Text>
-                <Text><strong>Guests:</strong> {reservationData.guests}</Text>
-                <Text><strong>Occasion:</strong> {reservationData.occasion}</Text>
-                <Text><strong>Seating:</strong> {reservationData.seating}</Text>
-                {reservationData.specialRequest && (
-                    <Text><strong>Special Request:</strong> {reservationData.specialRequest}</Text>
+                <Text><strong>Name:</strong> {basicInfo.name}</Text>
+                <Text><strong>Date:</strong> {reservationInfo.date}</Text>
+                <Text><strong>Time:</strong> {reservationInfo.time}</Text>
+                <Text><strong>Guests:</strong> {reservationInfo.guests}</Text>
+                <Text><strong>Occasion:</strong> {reservationInfo.occasion}</Text>
+                <Text><strong>Seating:</strong> {reservationInfo.seating}</Text>
+                {reservationInfo.specialRequest && (
+                    <Text><strong>Special Request:</strong> {reservationInfo.specialRequest}</Text>
                 )}
             </VStack>
         </Box>

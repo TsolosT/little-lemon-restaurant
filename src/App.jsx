@@ -7,10 +7,12 @@ import Menu from './pages/Menu'
 import Reservetion from './pages/Reservetion'
 import Login from './pages/Login'
 import UnderDevPage from './pages/UnderDevPage';
+import { BookingProvider } from "./context/booking/BookingContext";
 
 function App() {
 
   return (
+    <BookingProvider>
       <main>
         <Router>
           <Header/>
@@ -27,6 +29,7 @@ function App() {
           <Footer/>
         </Router>
       </main>
+    </BookingProvider>
   )
 }
 
