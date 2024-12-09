@@ -5,8 +5,12 @@ import { Box, Input, Button, VStack, FormLabel } from "@chakra-ui/react";
 // Validation schema for StepBasicInfo
 const validationSchema = Yup.object({
     name: Yup.string().required("Please enter a name for the reservesion"),
-    phone: Yup.string().required("Please enter a phone for any change that may occur."),
-    email: Yup.string().email("Invalid email format").required("Please enter a email for confirmation."),
+    phone: Yup.string()
+                .matches(/^[0-9]{10}$/, "Phone must be 10 digits.")
+                .required("Please enter a phone for any change that may occur."),
+    email: Yup.string()
+                .email("Invalid email format")
+                .required("Please enter a email for confirmation."),
 });
 
 const StepBasicInfo = ({ basicInfo, setBasicInfo, onNext }) => {
@@ -31,9 +35,11 @@ const StepBasicInfo = ({ basicInfo, setBasicInfo, onNext }) => {
                         onBlur={formik.handleBlur}
                         placeholder="Enter your name"
                         focusBorderColor="secondary.100"
+                        aria-invalid={formik.touched.name && !!formik.errors.name}
+                        aria-describedby="name-error"
                     />
                     {formik.touched.name && formik.errors.name && (
-                        <Box color="red.500" fontSize="sm">{formik.errors.name}</Box>
+                        <Box id="name-error" color="red.500" fontSize="sm">{formik.errors.name}</Box>
                     )}
                 </Box>
                 <Box w={{ base: "100%", md: "50%" }}>
@@ -45,9 +51,11 @@ const StepBasicInfo = ({ basicInfo, setBasicInfo, onNext }) => {
                         onBlur={formik.handleBlur}
                         placeholder="Enter your phone"
                         focusBorderColor="secondary.100"
+                        aria-invalid={formik.touched.phone && !!formik.errors.phone}
+                        aria-describedby="phone-error"
                     />
                     {formik.touched.phone && formik.errors.phone && (
-                        <Box color="red.500" fontSize="sm">{formik.errors.phone}</Box>
+                        <Box id="phone-error"  color="red.500" fontSize="sm">{formik.errors.phone}</Box>
                     )}
                 </Box>
                 <Box w={{ base: "100%", md: "50%" }}>
@@ -59,12 +67,14 @@ const StepBasicInfo = ({ basicInfo, setBasicInfo, onNext }) => {
                         onBlur={formik.handleBlur}
                         placeholder="Enter your email"
                         focusBorderColor="secondary.100"
+                        aria-invalid={formik.touched.email && !!formik.errors.email}
+                        aria-describedby="email-error"
                     />
                     {formik.touched.email && formik.errors.email && (
-                        <Box color="red.500" fontSize="sm">{formik.errors.email}</Box>
+                        <Box  id="email-error"  color="red.500" fontSize="sm">{formik.errors.email}</Box>
                     )}
                 </Box>
-                <Button type="submit" bg="primary.200" color="primary.100" size="lg" _hover={{ bg: "secondary.100" }}>
+                <Button type="submit" bg="primary.200" color="primary.100" size="lg" _hover={{ bg: "secondary.100" }} isLoading={formik.isSubmitting}>
                     Next
                 </Button>
             </VStack>

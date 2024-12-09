@@ -2,6 +2,15 @@ import { Box, Flex, Stack, Text, Link, Icon, Divider, Image } from "@chakra-ui/r
 import { FaInstagram, FaFacebook, FaTripadvisor } from "react-icons/fa";
 import logoFooter from "../../assets/logo-footer.png";
 
+const navLinks = [
+    { name: 'Home', href: '/' },
+    { name: 'About Us', href: '/about' },
+    { name: 'Menu', href: '/menu' },
+    { name: 'Reservation', href: '/reservation' },
+    { name: 'Order Online', href: '/order-online' },
+    { name: 'Login', href: '/login' },
+];
+
 const Footer = () => {
     return (
         <Box bg="primary.100" color="highlight.100" py={10}>
@@ -17,7 +26,7 @@ const Footer = () => {
                 {/* Column 1: Logo */}
                 <Stack spacing={4} textAlign={{ base: "center", md: "center" }}  mx="auto">
                     <Box w="100%" textAlign="center">
-                        <Image src={logoFooter} alt="Little Lemon Logo" mx="auto" maxW="150px" />
+                        <Image src={logoFooter} alt="Little Lemon Restaurant Logo" mx="auto" maxW="150px" />
                     </Box>
                 </Stack>
 
@@ -26,24 +35,11 @@ const Footer = () => {
                     <Text fontSize="lg" fontWeight="bold" fontFamily="Markazi Text" >
                         Navigation
                     </Text>
-                    <Link href="/" _hover={{ color: "secondary.100"  }}>
-                        Home
-                    </Link>
-                    <Link href="/about" _hover={{ color: "secondary.100"  }}>
-                        About Us
-                    </Link>
-                    <Link href="/menu" _hover={{ color: "secondary.100"  }}>
-                        Menu
-                    </Link>
-                    <Link href="/reservetion" _hover={{ color: "secondary.100"  }}>
-                        Reservetion
-                    </Link>
-                    <Link href="/order-online" _hover={{ color: "secondary.100"  }}>
-                        Order Online
-                    </Link>
-                    <Link href="/login" _hover={{ color: "secondary.100" }}>
-                        Login
-                    </Link>
+                    {navLinks.map((link) => (
+                        <Link key={link.name} href={link.href} _hover={{ color: "secondary.100" }}>
+                            {link.name}
+                        </Link>
+                    ))}
                 </Stack>
 
                 {/* Column 3: Contact Info */}
@@ -62,13 +58,13 @@ const Footer = () => {
                         Follow Us
                     </Text>
                     <Flex justify={{ base: "center", md: "flex-start" }} gap={4}>
-                        <Link href="#" isExternal>
+                        <Link href="https://www.instagram.com/" isExternal aria-label="Follow us on Instagram">
                             <Icon as={FaInstagram} boxSize={6} _hover={{ color: "secondary.100"  }}/>
                         </Link>
-                        <Link href="#" isExternal>
+                        <Link href="https://www.facebook.com/" isExternal aria-label="Follow us on Facebook">
                             <Icon as={FaFacebook} boxSize={6} _hover={{ color: "secondary.100"  }}/>
                         </Link>
-                        <Link href="#" isExternal>
+                        <Link href="https://tripadvisor.com" isExternal aria-label="Follow us on TripAdvisor">
                             <Icon as={FaTripadvisor} boxSize={6} _hover={{ color: "secondary.100"  }}/>
                         </Link>
                     </Flex>

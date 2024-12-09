@@ -13,13 +13,13 @@ const Header = () => {
         <IconButton
           size="md"
           icon={isOpen ? <FontAwesomeIcon icon={faTimes} /> : <FontAwesomeIcon icon={faBars} />}
-          aria-label="Toggle navigation"
+          aria-label={isOpen ? "Close navigation menu" : "Open navigation menu"}
           display={{ md: 'none' }}
           onClick={isOpen ? onClose : onOpen}
         />
         {/* Left: Logo */}
         <Box fontWeight="bold" fontSize="lg">
-          <Image src={Logo} alt="Little Lemon logo" boxSize="140px" />
+          <Image loading="lazy" src={Logo} alt="Little Lemon logo" boxSize="140px" />
         </Box>
 
         {/* Middle: Navigation Links */}
@@ -33,6 +33,7 @@ const Header = () => {
                   }}
                   href='/'
                   fontFamily='heading'
+                  aria-current={window.location.pathname === "/" ? "page" : undefined}
               >
                 Home
             </Link>
@@ -44,6 +45,7 @@ const Header = () => {
                   }}
                   href='/about'
                   fontFamily='heading'
+                  aria-current={window.location.pathname === "/about" ? "page" : undefined}
               >
                 About
             </Link>
@@ -55,6 +57,7 @@ const Header = () => {
                   }}
                   href='/menu'
                   fontFamily='heading'
+                  aria-current={window.location.pathname === "/menu" ? "page" : undefined}
               >
                 Menu
             </Link>
@@ -64,10 +67,11 @@ const Header = () => {
                       textDecoration: 'none',
                       bg: 'secondary.100',
                   }}
-                  href='/reservetion'
+                  href='/reservation'
                   fontFamily='heading'
+                  aria-current={window.location.pathname === "/reservation" ? "page" : undefined}
               >
-                Reservetion
+                Reservation
             </Link>
             <Link
                   px={2} py={1} rounded="md"
@@ -77,6 +81,7 @@ const Header = () => {
                   }}
                   href='/order-online'
                   fontFamily='heading'
+                  aria-current={window.location.pathname === "/order-online" ? "page" : undefined}
               >
                 Order Online
             </Link>
@@ -88,6 +93,7 @@ const Header = () => {
                   }}
                   href='/login'
                   fontFamily='heading'
+                  aria-current={window.location.pathname === "/login" ? "page" : undefined}
               >
                 Login
             </Link>
@@ -101,6 +107,7 @@ const Header = () => {
             color: 'secondary.100',
             transform: 'scale(1.05)',
           }}
+          aria-label="Shopping Cart"
         >
           <FontAwesomeIcon icon={faShoppingCart} size="lg"/>
         </Box>
@@ -118,6 +125,7 @@ const Header = () => {
                 }}
                 href='/'
                 fontFamily='heading'
+                aria-current={window.location.pathname === "/" ? "page" : undefined}
             >
               Home
           </Link>
@@ -129,6 +137,7 @@ const Header = () => {
                 }}
                 href='/about'
                 fontFamily='heading'
+                aria-current={window.location.pathname === "/about" ? "page" : undefined}
             >
               About
           </Link>
@@ -140,6 +149,7 @@ const Header = () => {
                 }}
                 href='/menu'
                 fontFamily='heading'
+                aria-current={window.location.pathname === "/menu" ? "page" : undefined}
             >
               Menu
           </Link>
@@ -149,10 +159,11 @@ const Header = () => {
                     textDecoration: 'none',
                     bg: 'secondary.100',
                 }}
-                href='/reservetion'
+                href='/reservation'
                 fontFamily='heading'
+                aria-current={window.location.pathname === "/reservation" ? "page" : undefined}
             >
-              Reservetion
+              Reservation
           </Link>
           <Link
                 px={2} py={1} rounded="md"
@@ -162,6 +173,7 @@ const Header = () => {
                 }}
                 href='/order-online'
                 fontFamily='heading'
+                aria-current={window.location.pathname === "/order-online" ? "page" : undefined}
             >
               Order Online
           </Link>
@@ -172,6 +184,7 @@ const Header = () => {
                     bg: 'secondary.100',
                 }}
                 href='/login'
+                aria-current={window.location.pathname === "/login" ? "page" : undefined}
                 fontFamily='heading'
             >
               Login

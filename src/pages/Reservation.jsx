@@ -9,7 +9,7 @@ import menu from '../data/menu';
 import { Link } from 'react-router-dom';
 
 
-function Reservetion() {
+function Reservation() {
     return (
         <>
             {/* Booking */}
@@ -85,4 +85,4 @@ function Reservetion() {
     );
 }
 
-export default Reservetion;
+export default Reservation;

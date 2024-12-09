@@ -4,9 +4,9 @@ import { Box, VStack, HStack, Input, Select, RadioGroup, Radio, Textarea, Button
 
 // Validation schema for StepReservationInfo
 const validationSchema = Yup.object({
-    date: Yup.string().required("Please enter a date of the reserversion"),
-    time: Yup.string().required("Please enter a time for the reserversion"),
-    guests: Yup.number().min(1, "At least 1 guest is required").required("Please enter the number of guests."),
+    date: Yup.date().min(new Date(), "Reservation date cannot be in the past.").required("Please enter a reservation date."),
+    time: Yup.string().required("Please enter a reservation time."),
+    guests: Yup.number().min(1, "At least 1 guest is required").max(20, "Maximum 20 guests allowed").required("Please enter the number of guests."),
 });
 
 const StepReservationInfo = ({ reservationInfo, setReservationInfo, onBack, onReserve }) => {
@@ -37,9 +37,11 @@ const StepReservationInfo = ({ reservationInfo, setReservationInfo, onBack, onRe
                                     filter: "invert(70%) sepia(0%) saturate(500%) hue-rotate(170deg)",
                                 },
                             }}
+                            aria-invalid={formik.touched.date && !!formik.errors.date}
+                            aria-describedby="date-error"
                         />
                         {formik.touched.date && formik.errors.date && (
-                            <Box color="red.500" fontSize="sm">{formik.errors.date}</Box>
+                            <Box color="red.500" fontSize="sm" id="date-error">{formik.errors.date}</Box>
                         )}
                     </Box>
                     <Box w={{ base: "100%", md: "25%" }}>
@@ -56,9 +58,11 @@ const StepReservationInfo = ({ reservationInfo, setReservationInfo, onBack, onRe
                                     filter: "invert(70%) sepia(0%) saturate(500%) hue-rotate(170deg)",
                                 },
                             }}
+                            aria-invalid={formik.touched.time && !!formik.errors.time}
+                            aria-describedby="time-error"
                         />
                         {formik.touched.time && formik.errors.time && (
-                            <Box color="red.500" fontSize="sm">{formik.errors.time}</Box>
+                            <Box id="time-error" color="red.500" fontSize="sm">{formik.errors.time}</Box>
                         )}
                     </Box>
                 </HStack>
@@ -72,9 +76,11 @@ const StepReservationInfo = ({ reservationInfo, setReservationInfo, onBack, onRe
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
                         focusBorderColor="secondary.100"
+                        aria-invalid={formik.touched.guests && !!formik.errors.guests}
+                        aria-describedby="guests-error"
                     />
                     {formik.touched.guests && formik.errors.guests && (
-                        <Box color="red.500" fontSize="sm">{formik.errors.guests}</Box>
+                        <Box id='guests-error' color="red.500" fontSize="sm">{formik.errors.guests}</Box>
                     )}
                 </Box>
                 <Box w={{ base: "100%", md: "50%" }}>
@@ -124,7 +130,7 @@ const StepReservationInfo = ({ reservationInfo, setReservationInfo, onBack, onRe
                     <Button type="button" onClick={onBack} size="lg" variant="ghost" color="secondary.100">
                         Back
                     </Button>
-                    <Button type="submit" bg="primary.200" color="primary.100" size="lg" _hover={{ bg: "secondary.100" }}>
+                    <Button type="submit" bg="primary.200" color="primary.100" size="lg" _hover={{ bg: "secondary.100" }} isLoading={formik.isSubmitting}>
                         Reserve Table
                     </Button>
                 </HStack>

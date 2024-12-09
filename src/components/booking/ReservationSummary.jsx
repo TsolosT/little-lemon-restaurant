@@ -16,6 +16,8 @@ const ReservationSummary = ({ basicInfo, reservationInfo }) => {
                 {reservationInfo.specialRequest && (
                     <Text><strong>Special Request:</strong> {reservationInfo.specialRequest}</Text>
                 )}
+
+                <Text>The reservesion info has been sent to your email. See you soon!</Text>
             </VStack>
         </Box>
     );

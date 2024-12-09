@@ -7,6 +7,8 @@ import {
   FormErrorMessage,
   VStack,
   useToast,
+  Text,
+  Link,
 } from "@chakra-ui/react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -73,8 +75,10 @@ const Login = () => {
                 value={formik.values.email}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
+                aria-invalid={formik.touched.email && !!formik.errors.email}
+                aria-describedby="email-error"
               />
-              <FormErrorMessage>{formik.errors.email}</FormErrorMessage>
+              <FormErrorMessage id="email-error">{formik.errors.email}</FormErrorMessage>
             </FormControl>
 
             {/* Password Field */}
@@ -86,10 +90,17 @@ const Login = () => {
                 value={formik.values.password}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
+                aria-invalid={formik.touched.password && !!formik.errors.password}
+                aria-describedby="password-error"
               />
-              <FormErrorMessage>{formik.errors.password}</FormErrorMessage>
+              <FormErrorMessage id="password-error">{formik.errors.password}</FormErrorMessage>
             </FormControl>
-
+            {/* forgot */}
+            <Text align="right">
+              <Link color="secondary.100" fontSize="sm" href="/forgot-password">
+                Forgot Password?
+              </Link>
+            </Text>
             {/* Login Button */}
             <Button
               bg="primary.200"
@@ -100,6 +111,7 @@ const Login = () => {
               size="lg"
               w="100%"
               isDisabled={formik.isSubmitting}
+              isLoading={formik.isSubmitting}
             >
               Login
             </Button>

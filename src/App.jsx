@@ -4,7 +4,7 @@ import Header from './components/layout/Header'
 import Footer from './components/layout/Footer'
 import Home from './pages/Home'
 import Menu from './pages/Menu'
-import Reservetion from './pages/Reservetion'
+import Reservation from './pages/Reservation'
 import Login from './pages/Login'
 import UnderDevPage from './pages/UnderDevPage';
 import { BookingProvider } from "./context/booking/BookingContext";
@@ -18,13 +18,16 @@ function App() {
           <Header/>
           <Routes>
             <Route path='/' element={<Home/>} />
-            <Route path='/menu' element={<Menu/>} />
+            <Route path='/menu' element={<UnderDevPage/>} />
             <Route path='/menu/:id' element={<UnderDevPage/>} />
             <Route path='/about' element={<UnderDevPage/>} />
-            <Route path='/reservetion' element={<Reservetion/>} />
+            <Route path='/reservation' element={<Reservation/>} />
             <Route path='/order-online' element={<UnderDevPage/>} />
+            <Route path='/order-online/:id' element={<UnderDevPage/>} />
             <Route path='/login' element={<Login/>} />
-            <Route path='/*' element={<UnderDevPage/>} />
+            <Route path='/sign-up' element={<UnderDevPage/>} />
+            <Route path='/forgot-password' element={<UnderDevPage/>} />
+            {/* <Route path='/*' element={<UnderDevPage/>} /> */}
           </Routes>
           <Footer/>
         </Router>
