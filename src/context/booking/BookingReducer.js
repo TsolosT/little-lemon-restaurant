@@ -15,6 +15,7 @@ export const initialBooking = {
     },
     step: 1,
     totalSteps: 3,
+    availableTimes: []
 };
 
 export const bookingReducer = (state, action) => {
@@ -28,6 +29,11 @@ export const bookingReducer = (state, action) => {
             return {
                 ...state,
                 reservationInfo: { ...state.reservationInfo, ...action.payload },
+            };
+        case "SET_AVAILABLE_TIMES":
+            return {
+                ...state,
+                availableTimes: action.payload,
             };
         case "NEXT_STEP":
             return {

@@ -22,6 +22,7 @@ const BookingForm = () => {
         }, 3000);
     };
 
+
     const stepLabels = ["Basic Info", "Reservation Info", "Confirmation"];
     const progress = (state.step / stepLabels.length) * 100;
 

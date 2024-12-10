@@ -1,6 +1,8 @@
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { Box, VStack, HStack, Input, Select, RadioGroup, Radio, Textarea, Button, FormLabel } from "@chakra-ui/react";
+import { Box, VStack, HStack, Input, Select, RadioGroup, Radio, Textarea, Button, FormLabel, Text, Spinner } from "@chakra-ui/react";
+import { useState } from "react";
+import { useAvailableTimes } from "../../hooks/useAvailableTimes";
 
 // Validation schema for StepReservationInfo
 const validationSchema = Yup.object({
@@ -10,6 +12,9 @@ const validationSchema = Yup.object({
 });
 
 const StepReservationInfo = ({ reservationInfo, setReservationInfo, onBack, onReserve }) => {
+    const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]); // Default date to today's date
+    const { availableTimes, loadingTimes, error } = useAvailableTimes(selectedDate); // Fetch available times for selected date
+
     const formik = useFormik({
         initialValues: reservationInfo,
         validationSchema: validationSchema,
@@ -18,6 +23,13 @@ const StepReservationInfo = ({ reservationInfo, setReservationInfo, onBack, onRe
             onReserve(); // Proceed with reservation
         },
     });
+
+    // Handle the date change
+    const handleDateChange = (e) => {
+        const newDate = e.target.value;
+        setSelectedDate(newDate); // Update the selected date
+        formik.setFieldValue("date", newDate); // Update Formik field
+    };
 
     return (
         <Box p={4}>
@@ -30,7 +42,7 @@ const StepReservationInfo = ({ reservationInfo, setReservationInfo, onBack, onRe
                             name="date"
                             type="date"
                             value={formik.values.date}
-                            onChange={formik.handleChange}
+                            onChange={handleDateChange}  // Using custom date change handler
                             onBlur={formik.handleBlur}
                             focusBorderColor="secondary.100"
                             sx={{
@@ -47,27 +59,43 @@ const StepReservationInfo = ({ reservationInfo, setReservationInfo, onBack, onRe
                     </Box>
                     <Box w={{ base: "100%", md: "25%" }}>
                         <FormLabel htmlFor="time">Time*</FormLabel>
-                        <Input
-                            id='time'
-                            name="time"
-                            type="time"
-                            value={formik.values.time}
-                            onChange={formik.handleChange}
-                            onBlur={formik.handleBlur}
-                            focusBorderColor="secondary.100"
-                            sx={{
-                                "&::-webkit-calendar-picker-indicator": {
-                                    filter: "invert(70%) sepia(0%) saturate(500%) hue-rotate(170deg)",
-                                },
-                            }}
-                            aria-invalid={formik.touched.time && !!formik.errors.time}
-                            aria-describedby="time-error"
-                        />
+                        {loadingTimes ? (
+                            <Spinner size="sm" color="primary.200" />
+                        ) : error ? (
+                            <Text color="red.500">{error}</Text>
+                        ) : (
+                            <Select
+                                id="time"
+                                name="time"
+                                value={formik.values.time}
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                                focusBorderColor="secondary.100"
+                                sx={{
+                                    "&::-webkit-calendar-picker-indicator": {
+                                        filter: "invert(70%) sepia(0%) saturate(500%) hue-rotate(170deg)",
+                                    },
+                                    option: {
+                                        bg: "gray.200",
+                                        color: "primary.100",
+                                    },
+                                }}
+                                aria-invalid={formik.touched.time && !!formik.errors.time}
+                                aria-describedby="time-error"
+                            >
+                                {availableTimes.map((time, index) => (
+                                    <option key={index} value={time}>
+                                        {time}
+                                    </option>
+                                ))}
+                            </Select>
+                        )}
                         {formik.touched.time && formik.errors.time && (
                             <Box id="time-error" color="red.500" fontSize="sm">{formik.errors.time}</Box>
                         )}
                     </Box>
                 </HStack>
+
                 <Box w={{ base: "100%", md: "50%" }}>
                     <FormLabel htmlFor="guests">Number of Guests*</FormLabel>
                     <Input
@@ -86,6 +114,7 @@ const StepReservationInfo = ({ reservationInfo, setReservationInfo, onBack, onRe
                         <Box id='guests-error' color="red.500" fontSize="sm">{formik.errors.guests}</Box>
                     )}
                 </Box>
+
                 <Box w={{ base: "100%", md: "50%" }}>
                     <FormLabel htmlFor="occasion">Occasion</FormLabel>
                     <Select
@@ -107,6 +136,7 @@ const StepReservationInfo = ({ reservationInfo, setReservationInfo, onBack, onRe
                         <option value="Birthday">Birthday</option>
                     </Select>
                 </Box>
+
                 <Box w={{ base: "100%", md: "50%" }}>
                     <FormLabel htmlFor="seating">Seating Option</FormLabel>
                     <RadioGroup
@@ -114,7 +144,7 @@ const StepReservationInfo = ({ reservationInfo, setReservationInfo, onBack, onRe
                         name="seating"
                         value={formik.values.seating}
                         onChange={(value) => formik.setFieldValue("seating", value)}
-                         aria-labelledby="seating-label"
+                        aria-labelledby="seating-label"
                     >
                         <HStack>
                             <Radio value="Indoor">Indoor</Radio>
@@ -122,6 +152,7 @@ const StepReservationInfo = ({ reservationInfo, setReservationInfo, onBack, onRe
                         </HStack>
                     </RadioGroup>
                 </Box>
+
                 <Box w={{ base: "100%", md: "50%" }}>
                     <FormLabel htmlFor="specialRequest">Special Requests</FormLabel>
                     <Textarea
@@ -133,6 +164,7 @@ const StepReservationInfo = ({ reservationInfo, setReservationInfo, onBack, onRe
                         focusBorderColor="secondary.100"
                     />
                 </Box>
+
                 <HStack spacing={4}>
                     <Button type="button" onClick={onBack} size="lg" variant="ghost" color="secondary.100">
                         Back
