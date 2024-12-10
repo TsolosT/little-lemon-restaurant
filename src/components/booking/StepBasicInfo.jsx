@@ -27,8 +27,9 @@ const StepBasicInfo = ({ basicInfo, setBasicInfo, onNext }) => {
         <Box p={4}>
             <VStack spacing={4} as="form" onSubmit={formik.handleSubmit}>
                 <Box w={{ base: "100%", md: "50%" }}>
-                    <FormLabel>Name*</FormLabel>
+                    <FormLabel htmlFor="name">Name*</FormLabel>
                     <Input
+                        id="name"
                         name="name"
                         value={formik.values.name}
                         onChange={formik.handleChange}
@@ -43,8 +44,9 @@ const StepBasicInfo = ({ basicInfo, setBasicInfo, onNext }) => {
                     )}
                 </Box>
                 <Box w={{ base: "100%", md: "50%" }}>
-                    <FormLabel>Phone*</FormLabel>
+                    <FormLabel htmlFor="phone">Phone*</FormLabel>
                     <Input
+                        id='phone'
                         name="phone"
                         value={formik.values.phone}
                         onChange={formik.handleChange}
@@ -59,8 +61,9 @@ const StepBasicInfo = ({ basicInfo, setBasicInfo, onNext }) => {
                     )}
                 </Box>
                 <Box w={{ base: "100%", md: "50%" }}>
-                    <FormLabel>Email*</FormLabel>
+                    <FormLabel htmlFor="email">Email*</FormLabel>
                     <Input
+                        id='email'
                         name="email"
                         value={formik.values.email}
                         onChange={formik.handleChange}

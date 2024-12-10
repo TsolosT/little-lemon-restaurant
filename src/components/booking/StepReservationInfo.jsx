@@ -24,8 +24,9 @@ const StepReservationInfo = ({ reservationInfo, setReservationInfo, onBack, onRe
             <VStack spacing={4} as="form" onSubmit={formik.handleSubmit}>
                 <HStack flexDirection={{ base: "column", md: "row" }} w="100%" justifyContent='center'>
                     <Box w={{ base: "100%", md: "25%" }}>
-                        <FormLabel>Date*</FormLabel>
+                        <FormLabel htmlFor="date">Date*</FormLabel>
                         <Input
+                            id='date'
                             name="date"
                             type="date"
                             value={formik.values.date}
@@ -45,8 +46,9 @@ const StepReservationInfo = ({ reservationInfo, setReservationInfo, onBack, onRe
                         )}
                     </Box>
                     <Box w={{ base: "100%", md: "25%" }}>
-                        <FormLabel>Time*</FormLabel>
+                        <FormLabel htmlFor="time">Time*</FormLabel>
                         <Input
+                            id='time'
                             name="time"
                             type="time"
                             value={formik.values.time}
@@ -67,8 +69,9 @@ const StepReservationInfo = ({ reservationInfo, setReservationInfo, onBack, onRe
                     </Box>
                 </HStack>
                 <Box w={{ base: "100%", md: "50%" }}>
-                    <FormLabel>Number of Guests*</FormLabel>
+                    <FormLabel htmlFor="guests">Number of Guests*</FormLabel>
                     <Input
+                        id='guests'
                         name="guests"
                         type="number"
                         min="1"
@@ -84,8 +87,9 @@ const StepReservationInfo = ({ reservationInfo, setReservationInfo, onBack, onRe
                     )}
                 </Box>
                 <Box w={{ base: "100%", md: "50%" }}>
-                    <FormLabel>Occasion</FormLabel>
+                    <FormLabel htmlFor="occasion">Occasion</FormLabel>
                     <Select
+                        id='occasion'
                         name="occasion"
                         value={formik.values.occasion}
                         onChange={formik.handleChange}
@@ -104,11 +108,13 @@ const StepReservationInfo = ({ reservationInfo, setReservationInfo, onBack, onRe
                     </Select>
                 </Box>
                 <Box w={{ base: "100%", md: "50%" }}>
-                    <FormLabel>Seating Option</FormLabel>
+                    <FormLabel htmlFor="seating">Seating Option</FormLabel>
                     <RadioGroup
+                        id='seating'
                         name="seating"
                         value={formik.values.seating}
                         onChange={(value) => formik.setFieldValue("seating", value)}
+                         aria-labelledby="seating-label"
                     >
                         <HStack>
                             <Radio value="Indoor">Indoor</Radio>
@@ -117,8 +123,9 @@ const StepReservationInfo = ({ reservationInfo, setReservationInfo, onBack, onRe
                     </RadioGroup>
                 </Box>
                 <Box w={{ base: "100%", md: "50%" }}>
-                    <FormLabel>Special Requests</FormLabel>
+                    <FormLabel htmlFor="specialRequest">Special Requests</FormLabel>
                     <Textarea
+                        id='specialRequest'
                         name="specialRequest"
                         value={formik.values.specialRequest}
                         onChange={formik.handleChange}
