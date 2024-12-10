@@ -6,21 +6,21 @@ import {
     Text,
     Image,
   } from "@chakra-ui/react";
-  import { Link } from "react-router-dom";
-  import { motion } from "framer-motion";
-  import FullScreenSection from "../components/layout/FullScreenSection";
-  import ReviewCard from "../components/ReviewCard";
-  import MenuItemCard from "../components/MenuItemCard";
-  import restaurantFoodImg from "../assets/restauranfood.jpg";
-  import aboutImage from "../assets/about.webp";
-  import reviews from "../data/reviews";
-  import menu from "../data/menu";
-  
-  // Motion wrapper for Chakra components
-  const MotionBox = motion(Box);
-  const MotionFlex = motion(Flex);
-  
-  function Home() {
+import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
+import FullScreenSection from "../components/layout/FullScreenSection";
+import ReviewCard from "../components/ReviewCard";
+import MenuItemCard from "../components/MenuItemCard";
+import restaurantFoodImg from "../assets/restauranfood.jpg";
+import aboutImage from "../assets/about.webp";
+import reviews from "../data/reviews";
+import menu from "../data/menu";
+
+// Motion wrapper for Chakra components
+const MotionBox = motion(Box);
+const MotionFlex = motion(Flex);
+
+function Home() {
     return (
       <>
         {/* Hero Section */}
@@ -77,11 +77,12 @@ import {
                 color="primary.100"
                 size="lg"
                 _hover={{ bg: "secondary.100" }}
+                mt={6}
               >
                 Reserve a Table
               </Button>
             </MotionBox>
-  
+
             {/* Right Column: Image */}
             <MotionBox
               maxW={{ base: "300px", md: "360px" }}
