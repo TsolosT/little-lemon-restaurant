@@ -8,7 +8,7 @@ function FaqList({data}) {
     }
 
     return (
-        <Accordion allowToggle>
+        <Accordion allowToggle maxWidth={{ base: 'md' }}>
             {data.map((item) => (
                 <AccordionItem key={item.id}>
                     <h2>

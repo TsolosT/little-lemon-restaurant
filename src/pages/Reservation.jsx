@@ -65,7 +65,7 @@ function Reservation() {
                 alignItems="center"
             >
                 <Flex
-                    direction={{ base: 'column'}}
+                    direction={{ base: 'column', md: 'row'}}
                     alignItems='center' justifyContent='space-evenly'
                     gap={8}
                     width='100%'
