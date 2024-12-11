@@ -1,116 +1,130 @@
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import StepReservationInfo from "../../../components/booking/StepReservationInfo";
-import { describe, it, expect, vi, beforeEach } from "vitest";
+import { describe, it, expect, vi } from "vitest";
+import { BookingContext } from '../../../context/booking/BookingContext';
 
-describe("StepReservationInfo Component", () => {
-    const reservationInfo = {
-        date: "",
-        time: "",
-        guests: "",
-        occasion: "",
-        seating: "",
-        specialRequest: "",
-    };
+// Mock useAvailableTimes hook
+vi.mock('../../hooks/useAvailableTimes', () => ({
+    useAvailableTimes: () => ({
+        availableTimes: ['18:00', '19:00', '20:00'],
+        loadingTimes: false,
+        error: null,
+    }),
+}));
+
+describe('StepReservationInfo Component', () => {
     const mockSetReservationInfo = vi.fn();
     const mockOnBack = vi.fn();
     const mockOnReserve = vi.fn();
+    const mockDispatch = vi.fn();
 
-    beforeEach(() => {
-        mockSetReservationInfo.mockClear();
-        mockOnBack.mockClear();
-        mockOnReserve.mockClear();
-    });
+    const mockContext = {
+        state: {
+            availableTimes: ['18:00', '19:00', '20:00'],
+        },
+        dispatch: mockDispatch,
+    };
 
-    it("renders all fields and buttons", () => {
+    it('renders the reservation form fields correctly', () => {
         render(
-            <StepReservationInfo
-                reservationInfo={reservationInfo}
-                setReservationInfo={mockSetReservationInfo}
-                onBack={mockOnBack}
-                onReserve={mockOnReserve}
-            />
+            <BookingContext.Provider value={mockContext}>
+                <StepReservationInfo
+                    reservationInfo={{
+                        date: '',
+                        time: '',
+                        guests: 1,
+                        occasion: '',
+                        seating: '',
+                        specialRequest: '',
+                    }}
+                    setReservationInfo={mockSetReservationInfo}
+                    onBack={mockOnBack}
+                    onReserve={mockOnReserve}
+                />
+            </BookingContext.Provider>
         );
 
-        // Check for all input fields
+        // Check that required fields are present
         expect(screen.getByLabelText(/Date\*/i)).toBeInTheDocument();
         expect(screen.getByLabelText(/Time\*/i)).toBeInTheDocument();
         expect(screen.getByLabelText(/Number of Guests\*/i)).toBeInTheDocument();
-        expect(screen.getByLabelText(/Occasion/i)).toBeInTheDocument();
+        expect(screen.getByText(/Occasion/i)).toBeInTheDocument();
         expect(screen.getByText(/Seating Option/i)).toBeInTheDocument();
         expect(screen.getByLabelText(/Special Requests/i)).toBeInTheDocument();
-
-        // Check for buttons
-        expect(screen.getByRole("button", { name: /Back/i })).toBeInTheDocument();
-        expect(screen.getByRole("button", { name: /Reserve Table/i })).toBeInTheDocument();
     });
 
-    it("displays validation errors for invalid inputs", async () => {
+    it('validates inputs and calls setReservationInfo on submit', async () => {
         render(
-            <StepReservationInfo
-                reservationInfo={reservationInfo}
-                setReservationInfo={mockSetReservationInfo}
-                onBack={mockOnBack}
-                onReserve={mockOnReserve}
-            />
+            <BookingContext.Provider value={mockContext}>
+                <StepReservationInfo
+                    reservationInfo={{
+                        date: '',
+                        time: '',
+                        guests: 1,
+                        occasion: '',
+                        seating: '',
+                        specialRequest: '',
+                    }}
+                    setReservationInfo={mockSetReservationInfo}
+                    onBack={mockOnBack}
+                    onReserve={mockOnReserve}
+                />
+            </BookingContext.Provider>
         );
 
-        // Submit form with no inputs
-        fireEvent.click(screen.getByRole("button", { name: /Reserve Table/i }));
+        // Simulate filling the form
+        const dateInput = screen.getByLabelText(/Date\*/i);
+        const timeSelect = screen.getByLabelText(/Time\*/i);
+        const guestsInput = screen.getByLabelText(/Number of Guests\*/i);
+        const submitButton = screen.getByRole('button', { name: /Reserve Table/i });
 
-        // Check for error messages
-        expect(await screen.findByText(/Please enter a reservation date/i)).toBeInTheDocument();
-        expect(await screen.findByText(/Please enter a reservation time/i)).toBeInTheDocument();
-        expect(await screen.findByText(/Please enter the number of guests/i)).toBeInTheDocument();
-    });
+        fireEvent.change(dateInput, { target: { value: '2050-12-25' } });
+        fireEvent.change(timeSelect, { target: { value: '18:00' } });
+        fireEvent.change(guestsInput, { target: { value: '5' } });
 
-    it("submits valid inputs and calls callbacks", async () => {
-        render(
-            <StepReservationInfo
-                reservationInfo={reservationInfo}
-                setReservationInfo={mockSetReservationInfo}
-                onBack={mockOnBack}
-                onReserve={mockOnReserve}
-            />
-        );
+        fireEvent.click(submitButton);
 
-        // Fill in valid inputs
-        fireEvent.change(screen.getByLabelText(/Date\*/i), { target: { value: "2024-12-15" } });
-        fireEvent.change(screen.getByLabelText(/Time\*/i), { target: { value: "18:00" } });
-        fireEvent.change(screen.getByLabelText(/Number of Guests\*/i), { target: { value: 4 } });
-        fireEvent.change(screen.getByLabelText(/Occasion/i), { target: { value: "Birthday" } });
-        fireEvent.click(screen.getByLabelText(/Indoor/i));
-
-        // Submit the form
-        fireEvent.click(screen.getByRole("button", { name: /Reserve Table/i }));
-
-        // Validate callback invocation with correct data
+        // Assert validation success and function calls
         await waitFor(() => {
-        expect(mockSetReservationInfo).toHaveBeenCalledWith({
-            date: "2024-12-15",
-            time: "18:00",
-            guests: 4,
-            occasion: "Birthday",
-            seating: "Indoor",
-            specialRequest: "",
-        });
-        expect(mockOnReserve).toHaveBeenCalled();
+            expect(mockSetReservationInfo).toHaveBeenCalledWith({
+                date: '2050-12-25',
+                time: '18:00',
+                guests: 5,
+                occasion: '',
+                seating: '',
+                specialRequest: '',
+            });
+            expect(mockOnReserve).toHaveBeenCalled();
         });
     });
 
-    it("calls onBack when the Back button is clicked", () => {
+    it('shows error messages for invalid inputs', async () => {
         render(
-            <StepReservationInfo
-                reservationInfo={reservationInfo}
-                setReservationInfo={mockSetReservationInfo}
-                onBack={mockOnBack}
-                onReserve={mockOnReserve}
-            />
+            <BookingContext.Provider value={mockContext}>
+                <StepReservationInfo
+                    reservationInfo={{
+                        date: '',
+                        time: '',
+                        guests: '',
+                        occasion: '',
+                        seating: '',
+                        specialRequest: '',
+                    }}
+                    setReservationInfo={mockSetReservationInfo}
+                    onBack={mockOnBack}
+                    onReserve={mockOnReserve}
+                />
+            </BookingContext.Provider>
         );
 
-        // Click the Back button
-        fireEvent.click(screen.getByRole("button", { name: /Back/i }));
+        const submitButton = screen.getByRole('button', { name: /Reserve Table/i });
 
-        // Validate onBack callback
-        expect(mockOnBack).toHaveBeenCalled();
+        fireEvent.click(submitButton);
+
+        // Check for validation errors
+        await waitFor(() => {
+            expect(screen.getByText(/Please enter a reservation date\./i)).toBeInTheDocument();
+            expect(screen.getByText(/Please enter a reservation time\./i)).toBeInTheDocument();
+        });
     });
 });

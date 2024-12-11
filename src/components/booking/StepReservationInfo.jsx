@@ -129,6 +129,7 @@ const StepReservationInfo = ({ reservationInfo, setReservationInfo, onBack, onRe
                                 color: "primary.100",
                             },
                         }}
+                        aria-labelledby="occasion-label"
                     >
                         <option value="Casual">Casual</option>
                         <option value="Business">Business</option>
