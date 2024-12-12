@@ -13,12 +13,14 @@ const UnderDevPage = () => {
       height="100vh"
       backgroundColor="highlight.100"
       px={{ base: 4, md: 8 }}
+      my={12}
     >
       <VStack
         spacing={{ base: 4, md: 6 }}
         width="100%"
         maxW="500px"
         align="center"
+        mb={5}
       >
         {/* Image */}
         <Image
